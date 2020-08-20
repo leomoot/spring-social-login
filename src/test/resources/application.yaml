@@ -1,8 +1,11 @@
 spring:
+    application:
+      name: spring-social-login
+       
     datasource:
-        url: jdbc:mysql://localhost:3306/spring-social-login?useSSL=false&serverTimezone=UTC&useLegacyDatetimeCode=false
+        url: jdbc:mysql://localhost:3306/spring-social-login?useSSL=false&serverTimezone=UTC&useLegacyDatetimeCode=false&allowPublicKeyRetrieval=true
         username: spring-social
-        password: test1234
+        password: ${SPRING_SOCIAL_DB_PASSWORD}
 
     jpa:
         show-sql: true
@@ -11,3 +14,14 @@ spring:
         properties:
             hibernate:
                 dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+
+    security:
+      oauth2:
+        client:
+          registration:
+            google:
+              client-id: ${GOOGLE_CLIENT_ID}
+              client-secret: ${GOOGLE_CLIENT_SECRET}        
+              scope:
+              - email
+              - profile                   
