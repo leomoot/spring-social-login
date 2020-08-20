@@ -21,7 +21,7 @@ import nl.leomoot.springsociallogin.security.oauth2.user.OAuth2UserInfoFactory;
 @Service
 public class CustomOidcUserService extends OidcUserService {
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
     
     @Override
     public OidcUser loadUser(OidcUserRequest oidcUserRequest) throws OAuth2AuthenticationException {

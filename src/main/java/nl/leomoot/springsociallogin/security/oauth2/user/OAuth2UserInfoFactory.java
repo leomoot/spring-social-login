@@ -15,7 +15,6 @@ public class OAuth2UserInfoFactory {
     }
     
     public static OAuth2UserInfo getOAuth2UserInfo(final String registrationId, final Map<String, Object> attributes) {
-        
         CommonOAuth2Provider authProvider = getOAuth2Provider(registrationId);
         switch (authProvider) {
             case GOOGLE: return new GoogleOAuth2UserInfo(attributes);
