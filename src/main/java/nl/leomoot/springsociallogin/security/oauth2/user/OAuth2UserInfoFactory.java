@@ -16,7 +16,7 @@ public class OAuth2UserInfoFactory {
     
     public static OAuth2UserInfo getOAuth2UserInfo(final String registrationId, final Map<String, Object> attributes) {
         
-        CommonOAuth2Provider authProvider = getOAuth2Prodiver(registrationId);
+        CommonOAuth2Provider authProvider = getOAuth2Provider(registrationId);
         switch (authProvider) {
             case GOOGLE: return new GoogleOAuth2UserInfo(attributes);
             default:
@@ -24,7 +24,7 @@ public class OAuth2UserInfoFactory {
         }
     }
     
-    public static CommonOAuth2Provider getOAuth2Prodiver(String registrationId) {
+    public static CommonOAuth2Provider getOAuth2Provider(String registrationId) {
         return Stream.of(CommonOAuth2Provider.values())
                 .filter(p -> p.toString().equalsIgnoreCase(registrationId))
                 .findFirst()

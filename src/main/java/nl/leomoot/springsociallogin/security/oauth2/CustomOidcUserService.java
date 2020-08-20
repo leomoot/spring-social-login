@@ -45,7 +45,7 @@ public class CustomOidcUserService extends OidcUserService {
         User user;
         if(userOptional.isPresent()) {
             user = userOptional.get();
-            if(!user.getProvider().equals(OAuth2UserInfoFactory.getOAuth2Prodiver(oidcUserRequest.getClientRegistration().getRegistrationId()))) {
+            if(!user.getProvider().equals(OAuth2UserInfoFactory.getOAuth2Provider(oidcUserRequest.getClientRegistration().getRegistrationId()))) {
                 throw new OAuth2AuthenticationProcessingException("Looks like you're signed up with " +
                         user.getProvider() + " account. Please use your " + user.getProvider() +
                         " account to login.");
@@ -61,7 +61,7 @@ public class CustomOidcUserService extends OidcUserService {
     private User registerNewUser(OAuth2UserRequest oAuth2UserRequest, OAuth2UserInfo oAuth2UserInfo) {
         User user = new User();
 
-        user.setProvider(OAuth2UserInfoFactory.getOAuth2Prodiver(oAuth2UserRequest.getClientRegistration().getRegistrationId()));
+        user.setProvider(OAuth2UserInfoFactory.getOAuth2Provider(oAuth2UserRequest.getClientRegistration().getRegistrationId()));
         user.setProviderId(oAuth2UserInfo.getId());
         user.setName(oAuth2UserInfo.getName());
         user.setEmail(oAuth2UserInfo.getEmail());
