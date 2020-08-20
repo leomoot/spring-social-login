@@ -3,59 +3,61 @@ package nl.leomoot.springsociallogin.security.oauth2;
 import java.util.Optional;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserRequest;
-import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserService;
+import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
-import org.springframework.security.oauth2.core.oidc.user.OidcUser;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import com.nimbusds.oauth2.sdk.util.StringUtils;
 import lombok.RequiredArgsConstructor;
 import nl.leomoot.springsociallogin.exception.OAuth2AuthenticationProcessingException;
 import nl.leomoot.springsociallogin.model.User;
 import nl.leomoot.springsociallogin.repository.UserRepository;
+import nl.leomoot.springsociallogin.security.UserPrincipal;
 import nl.leomoot.springsociallogin.security.oauth2.user.OAuth2UserInfo;
 import nl.leomoot.springsociallogin.security.oauth2.user.OAuth2UserInfoFactory;
 
 @RequiredArgsConstructor
 @Service
-public class CustomOidcUserService extends OidcUserService {
+public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
     private final UserRepository userRepository;
     
     @Override
-    public OidcUser loadUser(OidcUserRequest oidcUserRequest) throws OAuth2AuthenticationException {
-        OidcUser oidcUser = super.loadUser(oidcUserRequest);
+    public OAuth2User loadUser(OAuth2UserRequest oAuth2UserRequest) throws OAuth2AuthenticationException {
+        OAuth2User oAuth2User = super.loadUser(oAuth2UserRequest);
+
         try {
-            return processOAuth2User(oidcUserRequest, oidcUser);
-        } catch (AuthenticationException aEx) {           
+            return processOAuth2User(oAuth2UserRequest, oAuth2User);
+        } catch (AuthenticationException ex) {
+            throw ex;
+        } catch (Exception ex) {
             // Throwing an instance of AuthenticationException will trigger the OAuth2AuthenticationFailureHandler
-            throw new InternalAuthenticationServiceException(aEx.getMessage(), aEx.getCause());
+            throw new InternalAuthenticationServiceException(ex.getMessage(), ex.getCause());
         }
     }
 
-    private OidcUser processOAuth2User(OidcUserRequest oidcUserRequest, OidcUser oidcUser) {
-        
-        OAuth2UserInfo oAuth2UserInfo = OAuth2UserInfoFactory.getOAuth2UserInfo(oidcUserRequest.getClientRegistration().getRegistrationId(), oidcUser.getAttributes());
+    private OAuth2User processOAuth2User(OAuth2UserRequest oAuth2UserRequest, OAuth2User oAuth2User) {
+        OAuth2UserInfo oAuth2UserInfo = OAuth2UserInfoFactory.getOAuth2UserInfo(oAuth2UserRequest.getClientRegistration().getRegistrationId(), oAuth2User.getAttributes());
         if(StringUtils.isBlank(oAuth2UserInfo.getEmail())) {
-            throw new OAuth2AuthenticationProcessingException("Email not found.");
+            throw new OAuth2AuthenticationProcessingException("Email not found from OAuth2 provider");
         }
 
         Optional<User> userOptional = userRepository.findByEmail(oAuth2UserInfo.getEmail());
         User user;
         if(userOptional.isPresent()) {
             user = userOptional.get();
-            if(!user.getProvider().equals(OAuth2UserInfoFactory.getOAuth2Provider(oidcUserRequest.getClientRegistration().getRegistrationId()))) {
+            if(!user.getProvider().equals(OAuth2UserInfoFactory.getOAuth2Provider(oAuth2UserRequest.getClientRegistration().getRegistrationId()))) {
                 throw new OAuth2AuthenticationProcessingException("Looks like you're signed up with " +
                         user.getProvider() + " account. Please use your " + user.getProvider() +
                         " account to login.");
             }
             user = updateExistingUser(user, oAuth2UserInfo);
         } else {
-            user = registerNewUser(oidcUserRequest, oAuth2UserInfo);
+            user = registerNewUser(oAuth2UserRequest, oAuth2UserInfo);
         }
-        
-        return oidcUser;
+
+        return UserPrincipal.create(user, oAuth2User.getAttributes());
     }
 
     private User registerNewUser(OAuth2UserRequest oAuth2UserRequest, OAuth2UserInfo oAuth2UserInfo) {
@@ -76,4 +78,5 @@ public class CustomOidcUserService extends OidcUserService {
         
         return userRepository.save(existingUser);
     }
+    
 }

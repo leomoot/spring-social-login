@@ -4,16 +4,18 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserService;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import lombok.RequiredArgsConstructor;
+import nl.leomoot.springsociallogin.security.oauth2.CustomOAuth2UserService;
+import nl.leomoot.springsociallogin.security.oauth2.CustomOidcUserService;
 
 @RequiredArgsConstructor
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
      
-    private final OidcUserService oidcUserService;
+    private final CustomOidcUserService customOidcUserService;
+    private final CustomOAuth2UserService customOAuth2UserService;
     
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -23,6 +25,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .httpBasic(b -> b.disable())
             .csrf(c -> c.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
             .oauth2Login()
-            .userInfoEndpoint(u -> u.oidcUserService(oidcUserService));
+            .userInfoEndpoint(u -> u.userService(customOAuth2UserService))
+            .userInfoEndpoint(u -> u.oidcUserService(customOidcUserService)); // Open ID
     }
 }

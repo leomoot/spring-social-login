@@ -15,10 +15,10 @@ public class OAuth2UserInfoFactory {
     }
     
     public static OAuth2UserInfo getOAuth2UserInfo(final String registrationId, final Map<String, Object> attributes) {
-        
         CommonOAuth2Provider authProvider = getOAuth2Provider(registrationId);
         switch (authProvider) {
             case GOOGLE: return new GoogleOAuth2UserInfo(attributes);
+            case GITHUB: return new GithubOAuth2UserInfo2(attributes);
             default:
                 throw new OAuth2AuthenticationProcessingException("Login using " + registrationId + " is not supported.");
         }
