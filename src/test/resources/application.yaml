@@ -1,27 +1,41 @@
+server:
+  port: 8080
+
 spring:
     application:
       name: spring-social-login
        
     datasource:
-        url: jdbc:mysql://localhost:3306/spring-social-login?useSSL=false&serverTimezone=UTC&useLegacyDatetimeCode=false&allowPublicKeyRetrieval=true
-        username: spring-social
-        password: ${SPRING_SOCIAL_DB_PASSWORD}
-
+        url: jdbc:h2:mem:testdb
+        username: sa
+        password: password
     jpa:
         show-sql: true
         hibernate:
             ddl-auto: update
         properties:
             hibernate:
-                dialect: org.hibernate.dialect.MySQL5InnoDBDialect
-
+                dialect: org.hibernate.dialect.H2Dialect   
     security:
       oauth2:
         client:
           registration:
             google:
               client-id: ${GOOGLE_CLIENT_ID}
-              client-secret: ${GOOGLE_CLIENT_SECRET}        
-              scope:
-              - email
-              - profile                   
+              client-secret: ${GOOGLE_CLIENT_SECRET}      
+            github:    
+              client-id: ${GITHUB_CLIENT_ID}
+              client-secret: ${GITHUB_CLIENT_SECRET}      
+logging:
+  level:
+    root: debug
+    org.springframework.web.client: DEBUG
+
+application:
+  auth:          
+    tokenSecret: A415E64EDD512A6EA73B9637FB88E
+    tokenExpirationMsec: 864000000
+  oauth2:
+    authorizedRedirectUris:
+      - oauth/completeOAuth2Registration
+    #  - http://localhost:${port}/oauth2/redirect

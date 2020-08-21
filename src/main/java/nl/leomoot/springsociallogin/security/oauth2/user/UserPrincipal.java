@@ -1,4 +1,4 @@
-package nl.leomoot.springsociallogin.security;
+package nl.leomoot.springsociallogin.security.oauth2.user;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -7,15 +7,23 @@ import java.util.Map;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.oidc.OidcIdToken;
+import org.springframework.security.oauth2.core.oidc.OidcUserInfo;
+import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.security.oauth2.core.user.OAuth2User;
+import lombok.ToString;
 import nl.leomoot.springsociallogin.model.User;
 
-public class UserPrincipal implements OAuth2User, UserDetails {
+@SuppressWarnings("serial")
+@ToString
+public class UserPrincipal implements OAuth2User, OidcUser, UserDetails {
 
     private Long id;
     private String email;
     private String password;
     private Collection<? extends GrantedAuthority> authorities;
+    private OidcIdToken idToken;
+    private Map<String, Object> claims;
     private Map<String, Object> attributes;
 
     public UserPrincipal(Long id, String email, String password, Collection<? extends GrantedAuthority> authorities) {
@@ -37,12 +45,21 @@ public class UserPrincipal implements OAuth2User, UserDetails {
         );
     }
 
-    public static UserPrincipal create(User user, Map<String, Object> attributes) {
+    public static UserPrincipal create(User user, OAuth2UserInfo oAuth2UserInfo ) {
         UserPrincipal userPrincipal = UserPrincipal.create(user);
-        userPrincipal.setAttributes(attributes);
+        userPrincipal.setAttributes(oAuth2UserInfo.getAttributes());
+        
         return userPrincipal;
     }
 
+    public static UserPrincipal create(User user, Map<String, Object> claims, OAuth2UserInfo oAuth2UserInfo, OidcIdToken idToken) {      
+        UserPrincipal userPrincipal = UserPrincipal.create(user, oAuth2UserInfo);
+        userPrincipal.setClaims(claims);
+        userPrincipal.setIdToken(idToken);
+        
+        return userPrincipal;
+    }
+    
     public Long getId() {
         return id;
     }
@@ -98,5 +115,28 @@ public class UserPrincipal implements OAuth2User, UserDetails {
     @Override
     public String getName() {
         return String.valueOf(id);
+    }
+
+    @Override
+    public Map<String, Object> getClaims() {
+        return claims;
+    }
+
+    @Override
+    public OidcUserInfo getUserInfo() {
+        return new OidcUserInfo(this.attributes);
+    }
+
+    @Override
+    public OidcIdToken getIdToken() {
+        return idToken;
+    }
+    
+    public void setIdToken(OidcIdToken idToken) {
+        this.idToken = idToken;
+    }
+
+    public void setClaims(Map<String, Object> claims) {
+        this.claims = claims;
     }
 }
