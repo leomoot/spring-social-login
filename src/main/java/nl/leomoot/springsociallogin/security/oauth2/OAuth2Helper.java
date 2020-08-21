@@ -8,9 +8,9 @@ import com.nimbusds.oauth2.sdk.util.StringUtils;
 import nl.leomoot.springsociallogin.exception.OAuth2AuthenticationProcessingException;
 import nl.leomoot.springsociallogin.model.User;
 import nl.leomoot.springsociallogin.repository.UserRepository;
-import nl.leomoot.springsociallogin.security.UserPrincipal;
 import nl.leomoot.springsociallogin.security.oauth2.user.OAuth2UserInfo;
 import nl.leomoot.springsociallogin.security.oauth2.user.OAuth2UserInfoFactory;
+import nl.leomoot.springsociallogin.security.oauth2.user.UserPrincipal;
 
 public class OAuth2Helper {
     
@@ -22,14 +22,18 @@ public class OAuth2Helper {
         this.userRepository = userRepository;
         this.registrationId = oAuth2UserRequest.getClientRegistration().getRegistrationId();
     }
-
-    public OidcUser processOidc2User(OidcUser oidcUser) {        
+    
+    public static OAuth2Helper process(UserRepository userRepository, OAuth2UserRequest oAuth2UserRequest) {
+        return new OAuth2Helper(userRepository, oAuth2UserRequest);
+    }
+    
+    public OidcUser withOidc2User(OidcUser oidcUser) {        
         oAuth2UserInfo = OAuth2UserInfoFactory.getOAuth2UserInfo(registrationId, oidcUser.getAttributes());
         
         return UserPrincipal.create(handleDatabaseUser(), oidcUser.getClaims(), oAuth2UserInfo, oidcUser.getIdToken());
     }
 
-    public OAuth2User processOAuth2User(OAuth2User oAuth2User) {
+    public OAuth2User withOAuth2User(OAuth2User oAuth2User) {
         oAuth2UserInfo = OAuth2UserInfoFactory.getOAuth2UserInfo(registrationId, oAuth2User.getAttributes());
         return UserPrincipal.create(handleDatabaseUser(), oAuth2UserInfo);
     }

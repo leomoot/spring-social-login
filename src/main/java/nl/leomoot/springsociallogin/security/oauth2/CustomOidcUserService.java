@@ -19,9 +19,9 @@ public class CustomOidcUserService extends OidcUserService {
     @Override
     public OidcUser loadUser(OidcUserRequest oidcUserRequest) throws OAuth2AuthenticationException {        
         OidcUser oidcUser = super.loadUser(oidcUserRequest);
-        OAuth2Helper helper =  new OAuth2Helper(userRepository, oidcUserRequest);        
+      
         try {
-            return helper.processOidc2User(oidcUser);
+            return OAuth2Helper.process(userRepository, oidcUserRequest).withOidc2User(oidcUser);
         } catch (AuthenticationException aEx) {           
             // Throwing an instance of AuthenticationException will trigger the OAuth2AuthenticationFailureHandler
             throw new InternalAuthenticationServiceException(aEx.getMessage(), aEx.getCause());

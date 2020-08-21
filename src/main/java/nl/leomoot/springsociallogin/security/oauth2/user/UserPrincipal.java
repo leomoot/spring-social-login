@@ -1,4 +1,4 @@
-package nl.leomoot.springsociallogin.security;
+package nl.leomoot.springsociallogin.security.oauth2.user;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -13,7 +13,6 @@ import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import lombok.ToString;
 import nl.leomoot.springsociallogin.model.User;
-import nl.leomoot.springsociallogin.security.oauth2.user.OAuth2UserInfo;
 
 @SuppressWarnings("serial")
 @ToString
