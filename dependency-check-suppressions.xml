@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suppressions xmlns="https://jeremylong.github.io/DependencyCheck/dependency-suppression.1.1.xsd">
+    <suppress><notes><![CDATA[
+   file name: spring-security-core-5.3.4.RELEASE.jar
+   ]]></notes>
+        <filePath regex="true">.*spring-security-core-5.3.4.RELEASE.*\.jar</filePath>
+        <cve>CVE-2018-1258</cve>    
+    </suppress>
+    <suppress><notes><![CDATA[
+   file name: spring-security-oauth2-core-5.3.4.RELEASE.jar
+   ]]></notes>
+        <filePath regex="true">.*spring-security-oauth2-core-5.3.4.RELEASE.*\.jar</filePath>
+        <cve>CVE-2018-1258</cve>    
+    </suppress>
+    <suppress><notes><![CDATA[
+   file name: spring-security-oauth2-jose-5.3.4.RELEASE.jar
+   ]]></notes>
+        <filePath regex="true">.*spring-security-oauth2-jose-5.3.4.RELEASE.*\.jar</filePath>
+        <cve>CVE-2018-1258</cve>    
+    </suppress>
+    <suppress><notes><![CDATA[
+   file name: spring-security-oauth2-client-5.3.4.RELEASE.jar
+   ]]></notes>
+        <filePath regex="true">.*spring-security-oauth2-client-5.3.4.RELEASE.*\.jar</filePath>
+        <cve>CVE-2018-1258</cve>    
+    </suppress>
+    <suppress><notes><![CDATA[
+   file name: spring-security-web-5.3.4.RELEASE.jar
+   ]]></notes>
+        <filePath regex="true">.*spring-security-web-5.3.4.RELEASE.*\.jar</filePath>
+        <cve>CVE-2018-1258</cve>    
+    </suppress>
+    <suppress><notes><![CDATA[
+   file name: spring-security-config-5.3.4.RELEASE.jar
+   ]]></notes>
+        <filePath regex="true">.*spring-security-config-5.3.4.RELEASE.*\.jar</filePath>
+        <cve>CVE-2018-1258</cve>    
+    </suppress>
+     
+</suppressions>    
