@@ -114,8 +114,9 @@
 						<configuration>
 							<autoUpdate>true</autoUpdate>
 							<enableExperimental>true</enableExperimental>
-							<failBuildOnCVSS>11</failBuildOnCVSS>
+							<failBuildOnCVSS>7</failBuildOnCVSS> <!-- only breaks the build on HIGH severity vulnerabilities (CVSS - Common Vulnerability Scoring System >= 7) -->
 							<prettyPrint>true</prettyPrint>
+							<suppressionFile>dependency-check-suppressions.xml</suppressionFile>
 						</configuration>
 						<executions>
 							<execution>
