@@ -28,7 +28,7 @@ spring:
 logging:
   level:
     root: debug
-    org.springframework.web.client: DEBUG
+    org.springframework.web: DEBUG
 
 application:
   auth:          
@@ -36,6 +36,6 @@ application:
     tokenExpirationMsec: 864000000
   oauth2:
     authorizedRedirectUris:
-      - oauth/completeOAuth2Registration
-    #  - http://localhost:${port}/oauth2/redirect
+      # oauth/completeOAuth2Registration
+      - http://localhost:${port}/oauth2/redirect
                  
