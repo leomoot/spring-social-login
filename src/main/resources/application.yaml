@@ -27,15 +27,5 @@ spring:
               client-secret: ${GITHUB_CLIENT_SECRET}      
 logging:
   level:
-    root: debug
-    org.springframework.web.client: DEBUG
-
-application:
-  auth:          
-    tokenSecret: A415E64EDD512A6EA73B9637FB88E
-    tokenExpirationMsec: 864000000
-  oauth2:
-    authorizedRedirectUris:
-      - oauth/completeOAuth2Registration
-    #  - http://localhost:${port}/oauth2/redirect
-                 
+    root: info
+    org.springframework.web: DEBUG 
