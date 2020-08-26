@@ -2,8 +2,6 @@ package nl.leomoot.springsociallogin.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -11,7 +9,6 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
-import org.springframework.security.config.oauth2.client.CommonOAuth2Provider;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
@@ -42,8 +39,7 @@ public class User {
   private String password;
 
   @NotNull
-  @Enumerated(EnumType.STRING)
-  private CommonOAuth2Provider provider;
+  private String provider;
 
   private String providerId;
 }
