@@ -2,6 +2,7 @@ package nl.leomoot.springsociallogin.security.oauth2;
 
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
@@ -15,13 +16,15 @@ import nl.leomoot.springsociallogin.repository.UserRepository;
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
     private final UserRepository userRepository;
-    
+    private final ClientRegistrationRepository clientRegistrationRepository;
+
     @Override
-    public OAuth2User loadUser(OAuth2UserRequest oAuth2UserRequest) throws OAuth2AuthenticationException {
-        OAuth2User oAuth2User = super.loadUser(oAuth2UserRequest);
+    public OAuth2User loadUser(final OAuth2UserRequest oAuth2UserRequest) throws OAuth2AuthenticationException {
+        var oAuth2User = super.loadUser(oAuth2UserRequest);
         
         try {      
-            return OAuth2Helper.process(userRepository, oAuth2UserRequest).withOAuth2User(oAuth2User);            
+            return OAuth2Helper.process(userRepository, oAuth2UserRequest.getClientRegistration().getRegistrationId(), 
+                    clientRegistrationRepository).withOAuth2User(oAuth2User);            
         } catch (AuthenticationException ex) {
             throw ex;
         } catch (Exception ex) {

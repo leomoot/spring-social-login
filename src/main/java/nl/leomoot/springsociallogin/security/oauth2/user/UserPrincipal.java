@@ -45,17 +45,17 @@ public class UserPrincipal implements OAuth2User, OidcUser, UserDetails {
         );
     }
 
-    public static UserPrincipal create(User user, OAuth2UserInfo oAuth2UserInfo ) {
+    public static UserPrincipal create(User user, OAuth2UserInfo oAuth2UserInfo) {
         UserPrincipal userPrincipal = UserPrincipal.create(user);
         userPrincipal.setAttributes(oAuth2UserInfo.getAttributes());
         
         return userPrincipal;
     }
 
-    public static UserPrincipal create(User user, Map<String, Object> claims, OAuth2UserInfo oAuth2UserInfo, OidcIdToken idToken) {      
+    public static UserPrincipal create(User user, OAuth2UserInfo oAuth2UserInfo, OidcUser oidcUser) {      
         UserPrincipal userPrincipal = UserPrincipal.create(user, oAuth2UserInfo);
-        userPrincipal.setClaims(claims);
-        userPrincipal.setIdToken(idToken);
+        userPrincipal.setClaims(oidcUser.getClaims());
+        userPrincipal.setIdToken(oidcUser.getIdToken());
         
         return userPrincipal;
     }

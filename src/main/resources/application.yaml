@@ -21,11 +21,24 @@ spring:
           registration:
             google:
               client-id: ${GOOGLE_CLIENT_ID}
-              client-secret: ${GOOGLE_CLIENT_SECRET}      
+              client-secret: ${GOOGLE_CLIENT_SECRET}
             github:    
               client-id: ${GITHUB_CLIENT_ID}
-              client-secret: ${GITHUB_CLIENT_SECRET}      
+              client-secret: ${GITHUB_CLIENT_SECRET}
+            amazon:  
+              client-id: ${AMAZON_CLIENT_ID}
+              client-secret: ${AMAZON_CLIENT_ID}
+              authorization-grant-type: authorization_code
+              redirect-uri: '{baseUrl}/login/oauth2/code/{registrationId}'
+              scope: profile
+              client-name: Amazon
+          provider:
+            amazon:
+              authorization-uri: http://www.amazon.com/ap/oa
+              token-uri: https://api.amazon.com/auth/o2/token
+              user-info-uri: https://api.amazon.com/user/profile
+              user-name-attribute: name
 logging:
   level:
-    root: info
-    org.springframework.web: DEBUG 
+    root: debug
+    org.springframework.web: debug 
