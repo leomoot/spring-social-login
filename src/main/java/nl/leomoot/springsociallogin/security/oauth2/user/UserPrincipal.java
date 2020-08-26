@@ -114,7 +114,7 @@ public class UserPrincipal implements OAuth2User, OidcUser, UserDetails {
 
     @Override
     public String getName() {
-        return String.valueOf(id);
+        return String.valueOf(attributes.get("name"));
     }
 
     @Override
