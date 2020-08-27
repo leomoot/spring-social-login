@@ -23,25 +23,22 @@ public class OAuth2Helper {
     private final UserRepository userRepository;        
     private final String registrationId;
     private final ClientRegistrationRepository clientRegistrationRepository;
-
-    private OAuth2UserInfo userInfo;
     
     public static OAuth2Helper process(final UserRepository userRepository, final String registrationId, 
             final ClientRegistrationRepository clientRegistrationRepository) {
         return new OAuth2Helper(userRepository, registrationId, clientRegistrationRepository);
     }
     
-    public OidcUser withOidc2User(final OidcUser oidcUser) {        
-        userInfo = getUserInfo(registrationId, oidcUser.getAttributes());
-        return UserPrincipal.create(handleDatabaseUser(), userInfo, oidcUser);
+    public OidcUser withOidc2User(final OidcUser openIdUser) {                
+        return UserPrincipal.create(createOrUpdateDatabaseUser(openIdUser.getAttributes()), openIdUser);
     }
 
-    public OAuth2User withOAuth2User(final OAuth2User oAuth2User) {        
-        userInfo = getUserInfo(registrationId, oAuth2User.getAttributes());
-        return UserPrincipal.create(handleDatabaseUser(), userInfo);
+    public OAuth2User withOAuth2User(final OAuth2User oAuth2User) {         
+        return UserPrincipal.create(createOrUpdateDatabaseUser(oAuth2User.getAttributes()), oAuth2User);
     }
    
-    private User handleDatabaseUser() {
+    private User createOrUpdateDatabaseUser(final Map<String, Object> attributes) {
+        var userInfo = getUserInfo(registrationId, attributes);
         if(StringUtils.isBlank(userInfo.getEmail())) {
             throw new OAuth2AuthenticationProcessingException("Email not set in given UserInfo.");
         }
@@ -81,6 +78,9 @@ public class OAuth2Helper {
         return userRepository.save(existingUser);
     }
     
+    /**
+     * I *hate* the below code...
+     */
     private OAuth2UserInfo getUserInfo(final String registrationId, final Map<String, Object> attributes) {
         var clientRegistration = getProvider(registrationId);
         

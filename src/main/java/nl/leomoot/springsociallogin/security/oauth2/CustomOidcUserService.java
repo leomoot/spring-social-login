@@ -19,7 +19,7 @@ public class CustomOidcUserService extends OidcUserService {
     private final ClientRegistrationRepository clientRegistrationRepository;
     
     @Override
-    public OidcUser loadUser(OidcUserRequest oidcUserRequest) throws OAuth2AuthenticationException {        
+    public OidcUser loadUser(final OidcUserRequest oidcUserRequest) throws OAuth2AuthenticationException {        
         var oidcUser = super.loadUser(oidcUserRequest);
       
         try {
