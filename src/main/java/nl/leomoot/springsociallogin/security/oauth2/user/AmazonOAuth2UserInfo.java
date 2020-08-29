@@ -4,7 +4,7 @@ import java.util.Map;
 
 public class AmazonOAuth2UserInfo extends OAuth2UserInfo {
 
-    public AmazonOAuth2UserInfo(Map<String, Object> attributes) {
+    public AmazonOAuth2UserInfo(final Map<String, Object> attributes) {
         super(attributes);
     }
 
