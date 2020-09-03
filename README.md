@@ -31,4 +31,4 @@ To understand how OpenID Connect works we’ll review basic key concepts such as
 **redirectURI**: The Callback URL to which the Authorisation Server will redirect the Browser after authorisation has been granted by the User.
 
 
-!(docs/OpenID Connect.png)
+![](/docs/OpenID Connect.png)
