@@ -1,4 +1,4 @@
-# OAuth2 / OpenId
+# OpenID Connect using Spring Boot
 
 OpenID Connect is a security mechanism for an application to contact an identity service, verify the identity of the End-User, and obtain End-User information using REST API's in a secure way.
 
@@ -16,10 +16,10 @@ To understand how OpenID Connect works we’ll review basic key concepts such as
 
 **Claims**: Claims are simply key & value pairs that contain information about a end-user, as well meta-information about the authentication event. For e.g : Subject, Issuing Authority, Audience, Issue Date and Expiration Date etc.
 
-The Subject is a unique identifier assigned to a user by the Identity provider, for example a username.
-The Issuing Authority is the Identity provider that issued the token.
-The Audience identifies the Relying Party who can use this token.
-The Issue and Expiration Date is the date and time the token was issued and will expire.
+- The Subject is a unique identifier assigned to a user by the Identity provider, for example a username.
+- The Issuing Authority is the Identity provider that issued the token.
+- The Audience identifies the Relying Party who can use this token.
+- The Issue and Expiration Date is the date and time the token was issued and will expire.
 The Nonce values which mitigate replay attacks.
 Identity Token:  Identity of the End User provided by OpenID Provider to the Relying Party. The identity token contains a number of claims about that end User and also attributes about the End-User authentication event.
 
