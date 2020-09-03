@@ -20,8 +20,9 @@ To understand how OpenID Connect works we’ll review basic key concepts such as
 - The Issuing Authority is the Identity provider that issued the token.
 - The Audience identifies the Relying Party who can use this token.
 - The Issue and Expiration Date is the date and time the token was issued and will expire.
-The Nonce values which mitigate replay attacks.
-Identity Token:  Identity of the End User provided by OpenID Provider to the Relying Party. The identity token contains a number of claims about that end User and also attributes about the End-User authentication event.
+- The Nonce values which mitigate replay attacks.
+
+**Identity Token**:  Identity of the End User provided by OpenID Provider to the Relying Party. The identity token contains a number of claims about that end User and also attributes about the End-User authentication event.
 
 **Access Token**:  Access Tokens are credentials used to access Protected Resources.
 
