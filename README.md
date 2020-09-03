@@ -4,7 +4,7 @@ OpenID Connect is a security mechanism for an application to contact an identity
 
 OpenID Connect extends the OAuth 2.0 protocol. In other words, OpenID Connect is a simple identity layer that sits on the top of the OAuth 2.0 protocol. OpenID Connect is needed because even though OAuth provides authorization, it does not provide authentication.
 
-#Key Concepts
+# Key Concepts
 To understand how OpenID Connect works we’ll review basic key concepts such as:
 
 OpenID Provider: Authorization Server that offers authentication as a service and providing Claims to a Relying Party about the Authentication event and the End-User.
