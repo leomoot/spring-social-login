@@ -4,7 +4,7 @@ OpenID Connect is a security mechanism for an application to contact an identity
 
 OpenID Connect extends the OAuth 2.0 protocol. In other words, OpenID Connect is a simple identity layer that sits on the top of the OAuth 2.0 protocol. OpenID Connect is needed because even though OAuth provides authorization, it does not provide authentication.
 
-## Key Concepts
+### Key Concepts
 
 To understand how OpenID Connect works we’ll review basic key concepts such as:
 
@@ -30,7 +30,7 @@ To understand how OpenID Connect works we’ll review basic key concepts such as
 
 **redirectURI**: The Callback URL to which the Authorisation Server will redirect the Browser after authorisation has been granted by the User.
 
-# Authentication Flow and Endpoints :
+### Authentication Flow and Endpoints :
 Before we dive into the application configuration details, let’s have a quick look at how OpenID works, and how we’ll interact with it.
 
 Authorisation code flow diagram :
