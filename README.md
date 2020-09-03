@@ -37,3 +37,11 @@ Authorisation code flow diagram :
 
 ![OpenID Connect](https://user-images.githubusercontent.com/1628394/92103236-f446ec00-eddf-11ea-96ce-c9cd68057cbd.png)
 
+The OpenID Connect Provider has a number of EndPoints with which the End-User and Client Application interact. These are the Authorisation Endpoint, the Token Endpoint, the UserInfo endpoint and the JWKS endpoint.
+
+The Authorisation endpoint is where the End-User is asked to authenticate and grant the client application consent to access their identity, and any other required information such as email, or address. Once consent is given by end-user, this endpoint passes back an Authorisation code.
+
+The Relying party then makes a request for an ID token & Access Token to the token endpoint by exchanging the authorization code with client id & secret, to authenticate the client application for an ID token, an access token and optional refresh token.
+             
+The UserInfo Endpoint is a protected resource that is used by the OpenID Provider to return consented user information or claims to the client application, in exchange of a valid access token.
+
