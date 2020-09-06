@@ -35,7 +35,7 @@ Before we dive into the application configuration details, let’s have a quick 
 
 Authorisation code flow diagram :
 
-![OpenID Connect](https://user-images.githubusercontent.com/1628394/92103236-f446ec00-eddf-11ea-96ce-c9cd68057cbd.png)
+![OpenID Connect](https://user-images.githubusercontent.com/1628394/92324798-33c24200-f045-11ea-8607-f682d6b81148.png)
 
 The OpenID Connect Provider has a number of EndPoints with which the End-User and Client Application interact. These are the Authorisation Endpoint, the Token Endpoint, the UserInfo endpoint and the JWKS endpoint.
 
