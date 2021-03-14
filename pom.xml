@@ -102,7 +102,7 @@
 		<profile>
 			<id>owasp</id>
 			<properties>
-				<dependency-check.version>5.3.2</dependency-check.version>
+				<dependency-check.version>6.1.2</dependency-check.version>
 			</properties>
 			<build>
 				<plugins>
